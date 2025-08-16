@@ -1,4 +1,3 @@
-
 import os
 import networkx as nx
 import re
@@ -40,7 +39,7 @@ except Exception:
 
 # LangChain / LLM imports (keep as you used)
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_openai import ChatOpenAI 
+from langchain_openai import ChatOpenAI
 from langchain_core.tools import tool
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 
@@ -58,6 +57,7 @@ llm = ChatOpenAI(
     temperature=0,
     api_key=os.getenv("OPENAI_API_KEY")
 )
+
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend():
@@ -386,6 +386,11 @@ def plot_to_base64(max_bytes=100000):
             pass
 
 
+# -----------------------------
+# LLM agent setup
+# -----------------------------
+
+
 # Tools list for agent (LangChain tool decorator returns metadata for the LLM)
 tools = [scrape_url_to_dataframe]  # we only expose scraping as a tool; agent will still produce code
 
@@ -712,4 +717,3 @@ async def analyze_get_info():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
-
